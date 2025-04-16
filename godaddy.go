@@ -6,7 +6,7 @@ import (
 )
 
 // Provider wraps the provider implementation as a Caddy module.
-type CaddyProvider struct{ *godaddy.Provider }
+type CaddyProvider struct{ *Provider }
 
 func init() {
 	caddy.RegisterModule(CaddyProvider{})
@@ -16,7 +16,7 @@ func init() {
 func (CaddyProvider) CaddyModule() caddy.ModuleInfo {
 	return caddy.ModuleInfo{
 		ID:  "dns.providers.godaddy",
-		New: func() caddy.Module { return &CaddyProvider{new(godaddy.Provider)} },
+		New: func() caddy.Module { return &CaddyProvider{new(Provider)} },
 	}
 }
 
