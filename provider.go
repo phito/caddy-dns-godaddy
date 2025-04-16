@@ -142,7 +142,7 @@ func (p *Provider) AppendRecords(ctx context.Context, zone string, records []lib
 			return nil, err
 		}
 
-		req, err := http.NewRequest(http.MethodPut, p.getApiHost()+"/v1/domains/"+getDomain(record.Name)+"/records/"+record.Type+"/"+getRecordName(zone, record.Name), bytes.NewBuffer(data))
+		req, err := http.NewRequest(http.MethodPut, p.getApiHost()+"/v1/domains/phito.be/records/"+record.Type+"/"+getRecordName(zone, record.Name), bytes.NewBuffer(data))
 		if err != nil {
 			return nil, err
 		}
