@@ -6,23 +6,23 @@ import (
 )
 
 // Provider wraps the provider implementation as a Caddy module.
-type Provider struct{ *godaddy.Provider }
+type CaddyProvider struct{ *godaddy.Provider }
 
 func init() {
-	caddy.RegisterModule(Provider{})
+	caddy.RegisterModule(CaddyProvider{})
 }
 
 // CaddyModule returns the Caddy module information.
-func (Provider) CaddyModule() caddy.ModuleInfo {
+func (CaddyProvider) CaddyModule() caddy.ModuleInfo {
 	return caddy.ModuleInfo{
 		ID:  "dns.providers.godaddy",
-		New: func() caddy.Module { return &Provider{new(godaddy.Provider)} },
+		New: func() caddy.Module { return &CaddyProvider{new(godaddy.Provider)} },
 	}
 }
 
 // Before using the provider config, resolve placeholders in the API token.
 // Implements caddy.Provisioner.
-func (p *Provider) Provision(ctx caddy.Context) error {
+func (p *CaddyProvider) Provision(ctx caddy.Context) error {
 	repl := caddy.NewReplacer()
 	p.Provider.APIToken = repl.ReplaceAll(p.Provider.APIToken, "")
 	return nil
@@ -34,7 +34,7 @@ func (p *Provider) Provision(ctx caddy.Context) error {
 //     api_token <api_token>
 // }
 //
-func (p *Provider) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
+func (p *CaddyProvider) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
 	for d.Next() {
 		if d.NextArg() {
 			p.Provider.APIToken = d.Val()
@@ -65,6 +65,6 @@ func (p *Provider) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
 
 // Interface guards
 var (
-	_ caddyfile.Unmarshaler = (*Provider)(nil)
-	_ caddy.Provisioner     = (*Provider)(nil)
+	_ caddyfile.Unmarshaler = (*CaddyProvider)(nil)
+	_ caddy.Provisioner     = (*CaddyProvider)(nil)
 )
