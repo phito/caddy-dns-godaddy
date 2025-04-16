@@ -28,7 +28,7 @@ func getDomain(zone string) string {
 }
 
 func getRecordName(zone, name string) string {
-	return "phito.be"
+	return name + ".be"
 }
 
 func (p *Provider) getApiHost() string {
