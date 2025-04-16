@@ -180,53 +180,7 @@ func (p *Provider) SetRecords(ctx context.Context, zone string, records []libdns
 
 // DeleteRecords deletes the records from the zone.
 func (p *Provider) DeleteRecords(ctx context.Context, zone string, records []libdns.Record) ([]libdns.Record, error) {
-	log.Println("DeleteRecords", zone, records)
-
-	currentRecords, err := p.GetRecords(ctx, zone)
-	if err != nil {
-		return nil, err
-	}
-
 	var deletedRecords []libdns.Record
-
-	// accumulate records verified to actually exist in the zone
-	for _, record := range records {
-		for _, currentRecord := range currentRecords {
-			if currentRecord.Type == record.Type && currentRecord.Name == getRecordName(zone, record.Name) {
-				deletedRecords = append(deletedRecords, currentRecord)
-				break
-			}
-		}
-	}
-
-	// loop through and delete verified records with individual API calls
-	for _, record := range deletedRecords {
-		req, err := http.NewRequest(http.MethodDelete, p.getApiHost()+"/v1/domains/"+getDomain(zone)+"/records/"+record.Type+"/"+record.Name, nil)
-		if err != nil {
-			return nil, err
-		}
-		req.Header.Add("Authorization", "sso-key "+p.APIToken)
-		req.Header.Add("Content-Type", "application/json")
-
-		client := http.Client{}
-		resp, err := client.Do(req)
-		if err != nil {
-			return nil, err
-		}
-		defer resp.Body.Close()
-
-		if resp.StatusCode != http.StatusNoContent {
-			bodyBytes, _ := ioutil.ReadAll(resp.Body)
-			return nil, fmt.Errorf("could not delete requested records: Domain: %s; Records: %v, Status: %v; Body: %s",
-				zone, deletedRecords, resp.StatusCode, string(bodyBytes))
-		}
-
-		_, err = ioutil.ReadAll(resp.Body)
-		if err != nil {
-			return nil, err
-		}
-	}
-
 	return deletedRecords, nil
 }
 
