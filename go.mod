@@ -1,10 +1,10 @@
-module github.com/caddy-dns/godaddy
+module github.com/phito/caddy-dns-godaddy
 
 go 1.19
 
 require (
 	github.com/caddyserver/caddy/v2 v2.6.4
-	github.com/libdns/godaddy v0.0.0-20221029040642-6024bc932fda
+	github.com/libdns/libdns v0.2.1
 )
 
 require (
@@ -17,7 +17,6 @@ require (
 	github.com/google/pprof v0.0.0-20210407192527-94a9f03dee38 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.3 // indirect
-	github.com/libdns/libdns v0.2.1 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
 	github.com/mholt/acmez v1.1.0 // indirect
 	github.com/miekg/dns v1.1.50 // indirect
