@@ -29,7 +29,7 @@ func getDomain(zone string) string {
 }
 
 func getRecordName(zone, name string) string {
-	return strings.TrimSuffix(strings.TrimSuffix(name, zone), ".")
+	return "phito.be"
 }
 
 func (p *Provider) getApiHost() string {
