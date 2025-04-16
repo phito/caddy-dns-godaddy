@@ -30,7 +30,7 @@ func getDomain(zone string) string {
 	if len(parts) >= 2 {
 		return parts[len(parts)-2] + "." + parts[len(parts)-1]
 	}
-	return zone(zone, ".")
+	return zone
 }
 
 func getRecordName(zone, name string) string {
