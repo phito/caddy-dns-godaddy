@@ -25,12 +25,7 @@ type Provider struct {
 }
 
 func getDomain(zone string) string {
-	zone = strings.TrimSuffix(zone, ".")
-	parts := strings.Split(zone, ".")
-	if len(parts) >= 2 {
-		return parts[len(parts)-2] + "." + parts[len(parts)-1]
-	}
-	return zone
+	return strings.TrimSuffix(zone, ".")
 }
 
 func getRecordName(zone, name string) string {
@@ -147,7 +142,7 @@ func (p *Provider) AppendRecords(ctx context.Context, zone string, records []lib
 			return nil, err
 		}
 
-		req, err := http.NewRequest(http.MethodPut, p.getApiHost()+"/v1/domains/"+getDomain(zone)+"/records/"+record.Type+"/"+getRecordName(zone, record.Name), bytes.NewBuffer(data))
+		req, err := http.NewRequest(http.MethodPut, p.getApiHost()+"/v1/domains/"+getDomain(record.Name)+"/records/"+record.Type+"/"+getRecordName(zone, record.Name), bytes.NewBuffer(data))
 		if err != nil {
 			return nil, err
 		}
