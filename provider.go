@@ -8,7 +8,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"strings"
 	"time"
 
 	"github.com/libdns/libdns"
@@ -121,6 +120,7 @@ func (p *Provider) AppendRecords(ctx context.Context, zone string, records []lib
 	var appendedRecords []libdns.Record
 
 	for _, record := range records {
+		log.Println("AppendRecords", record.Name)
 		client := http.Client{}
 
 		type PostRecord struct {
